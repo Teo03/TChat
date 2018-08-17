@@ -1,0 +1,22 @@
+{
+    "name": "TChat",
+    "description": "Simple web video chat",
+    "scripts": {
+    },
+    "env": {
+    },
+    "formation": {
+      "web": {
+        "quantity": 1
+      }
+    },
+    "addons": [
+  
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ]
+  }
+  

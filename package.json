@@ -1,0 +1,25 @@
+{
+  "name": "video_chat",
+  "version": "1.0.0",
+  "description": "Simple web video chat app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "heroku-postbuild": "cd react-ui/ && yarn install && yarn install --only=dev --no-shrinkwrap && yarn build"
+  },
+  "engines": {
+    "node": "8.11.x"
+  },
+  "author": "Teodor Bogoeski",
+  "license": "ISC",
+  "devDependencies": {
+    "react-scripts": "^1.1.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "path": "^0.12.7",
+    "socket.io": "^2.1.1",
+    "yarn": "^1.7.0"
+  }
+}
