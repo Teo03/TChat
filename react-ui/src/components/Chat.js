@@ -17,8 +17,6 @@ export class Chat extends Component {
   constructor() {
       super();
       this.state = {
-          showvid: 'show',
-          showContent: 'show',
           showInfo: 'hide',
           info: '',
           showbtn: 'showelement',
@@ -39,12 +37,14 @@ export class Chat extends Component {
             } else {
                 remotevideo.srcObject = event.stream;
                 document.getElementById('vidcontainer').className = 'container show'
+                document.getElementById('content').className = 'hide'
             }
         };
         
         connection.onstreamended = (event) => {
             document.getElementById('vidcontainer').className = 'container hide'
             alert("Call ended");
+            window.location.reload();
         }
         //max 2 users
         connection.maxParticipantsAllowed = 1;
@@ -59,11 +59,13 @@ export class Chat extends Component {
 
     openRoom = () => {
         var roomid = prompt('Enter room name:');
-        if(roomid !== ''){
+        if (roomid === "") {
+            alert('Please enter a name');
+        } else if(roomid){
             connection.open(roomid);
             this.setState({showbtn: 'hide', showInfo: 'showelement', info: 'Created room: ' + roomid, link: 'https://' + window.location.hostname + '/chat/' + roomid});
         } else {
-            alert('Invalid name');
+            console.log('cancelled');
         }
     }
 
@@ -81,14 +83,16 @@ export class Chat extends Component {
             }
         } else {
             var roomid = prompt('Enter room to join:');
-            if(roomid !== ''){
+            if (roomid === "") {
+                alert('Please enter a name');
+            } else if (roomid) {
                 connection.openOrJoin(roomid, () => {
                     if (connection.isInitiator === true) {
                         alert('Room not found, created room: ' + roomid);
                     }
                 });
             } else {
-                alert('Invalid name');
+                console.log('cancelled');
             }
         }
     }
@@ -100,6 +104,7 @@ export class Chat extends Component {
     render = () => {
       return (
         <div className='container text-center'>
+        <div id='content'>
             <Nav />
             <br />
             <div className={this.state.showbtn}>
@@ -116,6 +121,7 @@ export class Chat extends Component {
                 <h3>Send this link to join you room:</h3>
                 <a><h3>{this.state.link}</h3></a>
                 <h3>Waiting for connections...</h3>
+            </div>
             </div>
             <div id='vidcontainer' className='container hide'>
                 <video id="remotevideo" autoPlay></video>
